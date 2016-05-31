@@ -82,18 +82,18 @@ shinyUI(
 				   		 			tabPanel("Guidance",
 				   		 					 h4(
 				   		 					 	tags$ul(tags$li(p("The State DOT's Risk is based on the Contractor's Risk and a selected sample size, n. A low value of", tags$i(HTML("&beta;")),"is desirable.")),
-				   		 					 			tags$li(p("It is important to know the interrelationship among",tags$i(HTML("&alpha;,")),tags$i(HTML("&beta;,")),"and sample size, n. A well-written acceptance plan attempts to provide a balance between",tags$i(HTML("&alpha;")),"and",tags$i(HTML("&beta;.")),"If the FHWA 
-				   		 					 					suggested value of 0.025 is used as the ",tags$i(HTML("&alpha;")),"risk, it may be difficult to obtain a relatively low value for",tags$i(HTML("&beta;")),"unless a large sample size is used. In the event the State DOT Risk is considered too high, and the desired balance of
+				   		 					 			tags$li(p("It is important to know the interrelationship among",tags$i(HTML("&alpha;,")),tags$i(HTML("&beta;,")),"and sample size, n. A well-written acceptance plan attempts to provide a balance between",tags$i(HTML("&alpha;")),"and",tags$i(HTML("&beta;.")),"The FHWA 
+				   		 					 					suggested value for an",tags$i(HTML("&alpha;")),"risk ranges from 0.01 (1.0%) to 0.05 (5.0%)*, If a low",tags$i(HTML("&alpha;")),"value is uesed, it may be difficult to obtain a relatively low value for",tags$i(HTML("&beta;")),"unless a large sample size is used. In the event the State DOT Risk is considered too high, and the desired balance of
 				   		 					 					the risks between the Contractor and the State DOT is not obtained, it is not realistic to increase the Contractor's risk,",tags$i(HTML("&alpha;,")),"to more than about 5%. If the ",tags$i(HTML("&alpha;")),"risk is limited to an upper value of 5% and the analysis indicates the
-				   		 					 					State DOT's risk,",tags$i(HTML("&beta;,")),"is too high, the only alternative is to increase the sample size."),
-				   		 					 					tags$ul(
-				   		 					 						tags$li(p("A subjective acceptable range of Contractor's risk, ",tags$i(HTML("&alpha;,")),"is 1% (0.01) to 5.0% (0.05). The range is even more subjective for the State DOT's risk,",tags$i(HTML("&alpha;,")),"than for the Contractor's risk because of the above mentioned relationship
-				   		 					 								among ",tags$i(HTML("&alpha;,")),tags$i(HTML("&beta;,")),"and sample size, n. The question becomes, how certain does the State DOT want to be that they are not verifying Contractor's data erroneously. Based on our experience, our recommendations are: a low",tags$i(HTML("&beta;")),"risk may be considered to be 30% (0.30) to 
-				   		 					 								40% (0.40); a medium",tags$i(HTML("&beta;")),"risk may be considered to be 50% (0.50) to 60% (0.60); and any",tags$i(HTML("&beta;")),"risk higher than 60% (0.60) may be considered higher than desirable.")
-				   		 					 								)
-				   		 					 							)
-				   		 					 					)
-				   		 					 			)
+				   		 					 					State DOT's risk,",tags$i(HTML("&beta;,")),"is too high, the only alternative is to increase the sample size.")),
+				   		 					 			tags$li(p("As mentioned above, and based on experience, a subjective acceptable range of Contractor's risk,",tags$i(HTML("&alpha;,")),"has been found to be 1.0% (0.01) to 5.0% (0.05). The range is even more subjective for the State DOT's risk,",tags$i(HTML("&beta;,")),"than for the Contractor's risk as many agencies have not defined \"unacceptable product\". Because of the above mentioned relationship
+				   		 					 						among ",tags$i(HTML("&alpha;,")),tags$i(HTML("&beta;,")),"and sample size, n, using a fixed",tags$i(HTML("&alpha;")),"makes",tags$i(HTML("&beta;")),"directly related to n. The question becomes, how certain does the State DOT want to be that they are not verifying Contractor's data erroneously? A suggested range of",tags$i(HTML("&beta;")),"risks, based on experience, is in the table below"))
+				   		 					 			),
+				   		 					 	tags$table(tags$tr(
+				   		 					 					tags$td("Low",tags$i(HTML("&beta;")),"risk"),tags$td("Medium",tags$i(HTML("&beta;")),"risk"),tags$td("Higher than desirable",tags$i(HTML("&beta;")),"risk")),
+				   		 					 			   tags$tr(
+				   		 					 			   	tags$td(h5("Less than 40% (0.40)")),tags$td(h5("50% (0.50) to 60% (0.60)")),tags$td(h5("Greater than 60% (0.60)")))
+				   		 					 			   ,border="1",width="100%",height="150",style="text-align:center")
 				   		 					 	)
 				   		 			)
 				   		 		)
@@ -109,10 +109,12 @@ shinyUI(
 				   		 		h4("State DOT's Data"),
 				   		 		numericInput("mu3","Sample Mean",13.2),
 				   		 		numericInput("var3","Sample Variance",1.22),
+				   		 		numericInput("n3","Sample size",10),
 				   		 		hr(),
 				   		 		h4("Contractor's Data"),
 				   		 		numericInput("mu4","Sample Mean",14.3),
 				   		 		numericInput("var4","Sample Variance",1.76),
+				   		 		numericInput("n4","Sample size",4),
 				   		 		hr(),
 				   		 		numericInput("pwr",HTML(paste("Expected power of test (1 -",tags$i(HTML("&beta;)")))),0.9,min=0,max=1,step=0.01), 
 				   		 		numericInput("ar",HTML(paste("n",tags$sub("Contr."),sep=""),"/",paste("n",tags$sub("State."),sep="")),1,step=0.1),
@@ -135,10 +137,12 @@ shinyUI(
 				   		 			tabPanel(HTML(paste(tags$i("t"),"test")),
 				   		 					 h4(htmlOutput("text8"),style="color:#555555")),
 				   		 			tabPanel("Guidance",
-				   		 					 h3(tags$ul(tags$li("If the required sample sizes are considered to be too large to be practical, there are some adjustments that can be made to the inputs. The Contractor’s Risk can be increased, 
-											or the power of test value can be decreased. A third choice may be the option to delay a decision concerning verification until the desired sample sizes are reached.
-				   		 					 				   ")
-				   		 					 )
+				   		 					 h4(p("If the required sample sizes are considered to be too large to be practical, there are some adjustments that can be made to the inputs."),
+				   		 					 tags$ul(tags$li("The Contractor’s Risk can be increased, or the power of test value can be decreased. A third choice may be the option to delay a decision concerning verification until the desired sample sizes are reached."),
+				   		 					 		tags$li("Often the",HTML(paste(tags$i("F-"),"test",sep="")),"will require larger sample sizes than the",HTML(paste(tags$i("t-"),"test",sep="")),"for validation. This is an indication that the variability between the two sets of data is statistically 
+				   		 					 				different. If the results of the",HTML(paste(tags$i("t-"),"test",sep="")),"are acceptable, an agency may chose to ignore the results of the",HTML(paste(tags$i("F-"),"test.",sep="")),"If this is done, it is suggested an investigation into the 
+				   		 					 				sources of variability of the two sets of data be done. One of the first steps that has found to be useful is to use the Paired",HTML(paste(tags$i("t-"),"test",sep="")),"in an attempt to find the difference.")
+				   		 					 		)
 				   		 					 ))
 				   		 		)
 				   		 	)
